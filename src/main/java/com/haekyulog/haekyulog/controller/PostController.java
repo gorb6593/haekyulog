@@ -1,12 +1,21 @@
 package com.haekyulog.haekyulog.controller;
 
+import com.haekyulog.haekyulog.domain.Post;
 import com.haekyulog.haekyulog.requesst.PostCreate;
+import com.haekyulog.haekyulog.response.PostResponse;
+import com.haekyulog.haekyulog.service.PostService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @Slf4j
 @RestController
 public class PostController {
@@ -15,6 +24,9 @@ public class PostController {
     // spa =>
     //   vue   => vue + ssr => nuxt.js
     //   react => react + ssr => next.js
+    private final PostService postService;
+
+
     @GetMapping("/posts")
     public String get() {
         return "Hello world";
@@ -26,8 +38,16 @@ public class PostController {
     // post method
 
     @PostMapping("/posts")
-    public String post(@RequestBody @Valid PostCreate postCreate) {
-        log.info("postCreate = {}" , postCreate.toString());
-        return "Hello world";
+    public void post(@RequestBody @Valid PostCreate postCreate) {
+        postService.write(postCreate);
+    }
+
+    /**
+     * /posts -> 글 전체 조회(검색 + 페이징)
+     * /posts/{postId} -> 글 한개만 조회
+     */
+    @GetMapping("/posts/{postId}")
+    public PostResponse get(@PathVariable(name = "postId") Long id) {
+        return postService.get(id);
     }
 }
