@@ -1,19 +1,14 @@
 package com.haekyulog.haekyulog.controller;
 
-import com.haekyulog.haekyulog.domain.Post;
 import com.haekyulog.haekyulog.requesst.PostCreate;
 import com.haekyulog.haekyulog.response.PostResponse;
 import com.haekyulog.haekyulog.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -49,5 +44,10 @@ public class PostController {
     @GetMapping("/posts/{postId}")
     public PostResponse get(@PathVariable(name = "postId") Long id) {
         return postService.get(id);
+    }
+
+    @GetMapping("/posts")
+    public List<PostResponse> getList(@PathVariable int page) {
+        return postService.getList(page);
     }
 }
