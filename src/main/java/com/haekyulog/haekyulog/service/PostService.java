@@ -33,6 +33,7 @@ public class PostService {
                 //.orElseThrow(PostNotFound::new);
                 //정확한 파라미터가 넘어 오지 않았을 때 해당 클래스를 에러 리스폰스를 클래스화 하는 것이 어떨까..
                 //페이징도 말도 안되는 페이징이 올 수 있고 100번 글까지 있는데 1000번 오면 공통 클래스에서 에러 메시지 던지면 어떨까..
+
         return PostResponse.builder()
                 .id(post.getId())
                 .title(post.getTitle())
