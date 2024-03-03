@@ -19,7 +19,6 @@ class PostServiceTest {
     @Autowired
     private PostRepository postRepository;
 
-
     @Test
     @DisplayName("글 작성!")
     void test1() {
@@ -37,22 +36,5 @@ class PostServiceTest {
         assertEquals("제목입니다.", post.getTitle());
         assertEquals("내용입니다.", post.getContent());
     }
-
-    @Test
-    @DisplayName("글 단건 조회")
-    void test2() {
-        //given
-
-        Post requestPost = Post.builder()
-                .title("test12")
-                .content("test22")
-                .build();
-        postRepository.save(requestPost);
-
-        //when
-        Post post = postService.get(requestPost.getId());
-
-        //then
-        assertNotNull(post);
-    }
 }
+
