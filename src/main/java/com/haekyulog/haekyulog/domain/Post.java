@@ -25,4 +25,7 @@ public class Post {
         this.title = title;
         this.content = content;
     }
+
+    //엔티티가 붙어있는 곳에는 서비스의 정책을 넣지마세요! 절대!!
+    // -> 응답 클래스를 분리하세요!
 }

@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Slf4j
 @RestController
@@ -43,11 +41,13 @@ public class PostController {
      */
     @GetMapping("/posts/{postId}")
     public PostResponse get(@PathVariable(name = "postId") Long id) {
+        //Request class
+        //Response class
         return postService.get(id);
     }
 
-    @GetMapping("/posts")
-    public List<PostResponse> getList(@PathVariable int page) {
-        return postService.getList(page);
-    }
+//    @GetMapping("/posts")
+//    public List<PostResponse> getList(@PathVariable int page) {
+//        return postService.getList(page);
+//    }
 }

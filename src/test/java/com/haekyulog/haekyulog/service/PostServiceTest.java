@@ -3,12 +3,15 @@ package com.haekyulog.haekyulog.service;
 import com.haekyulog.haekyulog.domain.Post;
 import com.haekyulog.haekyulog.repository.PostRepository;
 import com.haekyulog.haekyulog.requesst.PostCreate;
+import com.haekyulog.haekyulog.response.PostResponse;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 class PostServiceTest {
@@ -18,6 +21,12 @@ class PostServiceTest {
 
     @Autowired
     private PostRepository postRepository;
+
+    @BeforeEach
+    void clean() {
+        postRepository.deleteAll();
+    }
+
 
     @Test
     @DisplayName("글 작성!")
@@ -36,5 +45,28 @@ class PostServiceTest {
         assertEquals("제목입니다.", post.getTitle());
         assertEquals("내용입니다.", post.getContent());
     }
+
+    @Test
+    @DisplayName("글 1개 조회")
+    void test2() {
+
+        //given
+        Post requestPost = Post.builder()
+                .title("foo")
+                .content("bar")
+                .build( );
+        postRepository.save(requestPost);
+
+        //when
+        PostResponse postResponse = postService.get(requestPost.getId());
+
+        //then
+        assertNotNull(postResponse);
+        assertEquals(1L, postRepository.count());
+        assertEquals("foo", postResponse.getTitle());
+        assertEquals("bar", postResponse.getContent());
+    }
+
+
 }
 

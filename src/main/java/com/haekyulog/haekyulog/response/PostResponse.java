@@ -23,7 +23,7 @@ public class PostResponse {
     @Builder
     public PostResponse(Long id, String title, String content) {
         this.id = id;
-        this.title = title;
+        this.title = title.substring(0, Math.min(title.length(), 10)); //10글자만 달라는 요청이 왔을 때
         this.content = content;
     }
 }
