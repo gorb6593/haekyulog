@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -23,23 +26,15 @@ public class PostService {
         postRepository.save(post);
     }
 
-//    public PostResponse  get(Long id) {
     public PostResponse get(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
-                //.orElseThrow(PostNotFound::new);
 
         return PostResponse.builder()
                 .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
                 .build();
-
-        /**
-         * Controller -> WebService -> Repository
-         *             -> PostService
-         */
-
     }
 
 //    public List<PostResponse> getList(int page) {
@@ -56,4 +51,9 @@ public class PostService {
 //                .map(PostResponse::new)
 //                .collect(Collectors.toList());
 //    }
+    public List<PostResponse> getList() {
+        return postRepository.findAll().stream()
+                .map(PostResponse::new)
+                .collect(Collectors.toList());
+    }
 }

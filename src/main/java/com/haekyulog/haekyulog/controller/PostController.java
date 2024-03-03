@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Slf4j
 @RestController
@@ -20,10 +22,10 @@ public class PostController {
     private final PostService postService;
 
 
-    @GetMapping("/posts")
-    public String get() {
-        return "Hello world";
-    }
+//    @GetMapping("/posts")
+//    public String get() {
+//        return "Hello world";
+//    }
 
     // Http Method
     // Get, Post, Put, Patch, Delete, Options, Head, Trace, connect
@@ -40,14 +42,15 @@ public class PostController {
      * /posts/{postId} -> 글 한개만 조회
      */
     @GetMapping("/posts/{postId}")
-    public PostResponse get(@PathVariable(name = "postId") Long id) {
-        //Request class
-        //Response class
-        return postService.get(id);
+    public PostResponse get(@PathVariable Long postId) {
+        return postService.get(postId);
     }
 
-//    @GetMapping("/posts")
-//    public List<PostResponse> getList(@PathVariable int page) {
-//        return postService.getList(page);
-//    }
+    // 조회 API
+    // 단건 조회
+    // 다건 조회
+    @GetMapping("/posts")
+    public List<PostResponse> getList() {
+        return postService.getList();
+    }
 }
