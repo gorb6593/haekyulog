@@ -1,12 +1,12 @@
 package com.haekyulog.haekyulog.controller;
 
 import com.haekyulog.haekyulog.requesst.PostCreate;
+import com.haekyulog.haekyulog.requesst.PostSearch;
 import com.haekyulog.haekyulog.response.PostResponse;
 import com.haekyulog.haekyulog.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,8 +50,12 @@ public class PostController {
     // 조회 API
     // 단건 조회
     // 다건 조회
+//    @GetMapping("/posts")
+//    public List<PostResponse> getList(Pageable pageable) {
+//        return postService.getList(pageable);
+//    }
     @GetMapping("/posts")
-    public List<PostResponse> getList(Pageable pageable) {
-        return postService.getList(pageable);
+    public List<PostResponse> getList(@ModelAttribute PostSearch postSearch) {
+        return postService.getList(postSearch);
     }
 }

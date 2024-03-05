@@ -147,7 +147,7 @@ class PostControllerTest {
 //                .title("title_2")
 //                .content("content_2")
 //                .build());
-        List<Post> requestPosts = IntStream.range(1,31)
+        List<Post> requestPosts = IntStream.range(1,10)
                 .mapToObj(i -> Post.builder()
                         .title("해규 제목 : " + i)
                         .content("반포 자이 : " + i)
@@ -157,7 +157,7 @@ class PostControllerTest {
         postRepository.saveAll(requestPosts);
 
         // expected ( when + then)
-        mockMvc.perform(get("/posts?page=1&sort=id,desc")
+        mockMvc.perform(get("/posts?page=1&size=10")
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 /**
@@ -179,6 +179,26 @@ class PostControllerTest {
 
 
         //then
+    }
+
+    @Test
+    @DisplayName("페이지를 0으로 요청하면 첫 페이지를 가져온다. ")
+    void test6() throws Exception {
+        //given
+        List<Post> requestPosts = IntStream.range(1,10)
+                .mapToObj(i -> Post.builder()
+                        .title("해규 제목 : " + i)
+                        .content("반포 자이 : " + i)
+                        .build())
+                .toList();
+
+        postRepository.saveAll(requestPosts);
+
+        // expected ( when + then)
+        mockMvc.perform(get("/posts?page=0&size=10")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
     }
 
 }
