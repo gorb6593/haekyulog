@@ -1,6 +1,7 @@
 package com.haekyulog.haekyulog.controller;
 
 import com.haekyulog.haekyulog.requesst.PostCreate;
+import com.haekyulog.haekyulog.requesst.PostEdit;
 import com.haekyulog.haekyulog.requesst.PostSearch;
 import com.haekyulog.haekyulog.response.PostResponse;
 import com.haekyulog.haekyulog.service.PostService;
@@ -57,5 +58,10 @@ public class PostController {
     @GetMapping("/posts")
     public List<PostResponse> getList(@ModelAttribute PostSearch postSearch) {
         return postService.getList(postSearch);
+    }
+
+    @PatchMapping("/posts/{postId}")
+    public PostResponse edit(@PathVariable Long postId, @RequestBody @Valid PostEdit request) {
+        return postService.edit(postId, request);
     }
 }

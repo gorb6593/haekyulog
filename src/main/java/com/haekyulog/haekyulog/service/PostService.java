@@ -1,13 +1,16 @@
 package com.haekyulog.haekyulog.service;
 
 import com.haekyulog.haekyulog.domain.Post;
+import com.haekyulog.haekyulog.domain.PostEditor;
 import com.haekyulog.haekyulog.repository.PostRepository;
 import com.haekyulog.haekyulog.requesst.PostCreate;
+import com.haekyulog.haekyulog.requesst.PostEdit;
 import com.haekyulog.haekyulog.requesst.PostSearch;
 import com.haekyulog.haekyulog.response.PostResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,11 +62,27 @@ public class PostService {
 //                .map(PostResponse::new)
 //                .collect(Collectors.toList());
 //    }
-public List<PostResponse> getList(PostSearch postSearch) {
-    //web -> page 1 -> 0
-    //Pageable pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "id"));
-    return postRepository.getList(postSearch).stream()
-            .map(PostResponse::new)
-            .collect(Collectors.toList());
-}
+    public List<PostResponse> getList(PostSearch postSearch) {
+        //web -> page 1 -> 0
+        //Pageable pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "id"));
+        return postRepository.getList(postSearch).stream()
+                .map(PostResponse::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public PostResponse edit(Long id, PostEdit postEdit) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+        //post.change(postEdit.getTitle(), postEdit.getContent());
+        PostEditor.PostEditorBuilder editorBuilder = post.toEditor();
+
+        PostEditor postEditor = editorBuilder.title(postEdit.getTitle())
+                .content(postEdit.getContent())
+                .build();
+
+        post.edit(postEditor);
+
+        return new PostResponse(post);
+    }
 }

@@ -3,6 +3,7 @@ package com.haekyulog.haekyulog.service;
 import com.haekyulog.haekyulog.domain.Post;
 import com.haekyulog.haekyulog.repository.PostRepository;
 import com.haekyulog.haekyulog.requesst.PostCreate;
+import com.haekyulog.haekyulog.requesst.PostEdit;
 import com.haekyulog.haekyulog.requesst.PostSearch;
 import com.haekyulog.haekyulog.response.PostResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -117,6 +118,58 @@ class PostServiceTest {
         //assertEquals("해규 제목 : 26",posts.get(4).getTitle());
      }
 
+    @Test
+    @DisplayName("글 제목 수정")
+    void test4() {
+
+        //given
+        Post post = Post.builder()
+                .title("해규 제목")
+                .content("반포자이")
+                .build();
+
+        postRepository.save(post);
+
+        PostEdit postEdit = PostEdit.builder()
+                .title("해규 제목 테스트 수정")
+                .content("반포자이")
+                .build();
+        //when
+        postService.edit(post.getId(), postEdit);
+
+        //then
+        Post changePost = postRepository.findById(post.getId())
+                .orElseThrow(() -> new RuntimeException("글이 없습니다. id = " + post.getId()));
+        assertEquals("해규 제목 테스트 수정", changePost.getTitle());
+        assertEquals("반포자이", changePost.getContent());
+
+    }
+
+    @Test
+    @DisplayName("글 내용 수정")
+    void test5() {
+
+        //given
+        Post post = Post.builder()
+                .title("해규 제목")
+                .content("반포자이")
+                .build();
+
+        postRepository.save(post);
+
+        PostEdit postEdit = PostEdit.builder()
+                .title("해규 제목")
+                .content("헬리오시티")
+                .build();
+        //when
+        postService.edit(post.getId(), postEdit);
+
+        //then
+        Post changePost = postRepository.findById(post.getId())
+                .orElseThrow(() -> new RuntimeException("글이 없습니다. id = " + post.getId()));
+        assertEquals("헬리오시티", changePost.getContent());
+
+    }
 
 }
 
