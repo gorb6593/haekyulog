@@ -171,5 +171,24 @@ class PostServiceTest {
 
     }
 
+    @Test
+    @DisplayName("글 삭제")
+    void test6() {
+
+        //given
+        Post post = Post.builder()
+                .title("해규 제목")
+                .content("반포자이")
+                .build();
+
+        postRepository.save(post);
+
+        postService.delete(post.getId());
+
+        //then
+        assertEquals(0, postRepository.count());
+
+    }
+
 }
 
