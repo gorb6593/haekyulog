@@ -17,8 +17,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @SpringBootTest
@@ -187,6 +186,26 @@ class PostServiceTest {
 
         //then
         assertEquals(0, postRepository.count());
+
+    }
+
+    @Test
+    @DisplayName("글 1개 조회")
+    void test7() {
+
+        //given
+        Post post = Post.builder()
+                .title("해규 제목")
+                .content("반포자이")
+                .build();
+
+        postRepository.save(post);
+        //expected
+        assertThrows(IllegalArgumentException.class, () -> {
+            postService.get(post.getId() + 1L);
+        });
+
+
 
     }
 
