@@ -1,6 +1,7 @@
 package com.haekyulog.haekyulog.service;
 
 import com.haekyulog.haekyulog.domain.Post;
+import com.haekyulog.haekyulog.exception.PostNotFound;
 import com.haekyulog.haekyulog.repository.PostRepository;
 import com.haekyulog.haekyulog.requesst.PostCreate;
 import com.haekyulog.haekyulog.requesst.PostEdit;
@@ -31,7 +32,8 @@ public class PostService {
 
     public PostResponse get(Long id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+                //.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+            .orElseThrow(() -> PostNotFound.class);
 
         return PostResponse.builder()
                 .id(post.getId())
