@@ -24,10 +24,10 @@ public class PostController {
     private final PostService postService;
 
 
-//    @GetMapping("/posts")
-//    public String get() {
-//        return "Hello world";
-//    }
+    @GetMapping("/test")
+    public String get() {
+        return "Hello world";
+    }
 
     // Http Method
     // Get, Post, Put, Patch, Delete, Options, Head, Trace, connect
