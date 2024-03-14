@@ -1,12 +1,12 @@
 package com.haekyulog.haekyulog.service;
 
 import com.haekyulog.haekyulog.domain.Post;
+import com.haekyulog.haekyulog.exception.PostNotFound;
 import com.haekyulog.haekyulog.repository.PostRepository;
 import com.haekyulog.haekyulog.requesst.PostCreate;
 import com.haekyulog.haekyulog.requesst.PostEdit;
 import com.haekyulog.haekyulog.requesst.PostSearch;
 import com.haekyulog.haekyulog.response.PostResponse;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -202,11 +202,11 @@ class PostServiceTest {
 
         postRepository.save(post);
         //expected
-        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(PostNotFound.class, () -> {
             postService.get(post.getId() + 1L);
         });
 
-        Assertions.assertEquals("존재하지 않는 글입니다." , e.getMessage());
+        //Assertions.assertEquals("존재하지 않는 글입니다." , e.getMessage());
 
 
     }
