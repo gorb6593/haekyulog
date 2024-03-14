@@ -1,15 +1,15 @@
 package com.haekyulog.haekyulog.controller;
 
+import com.haekyulog.haekyulog.exception.PostNotFound;
 import com.haekyulog.haekyulog.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Slf4j
 @ControllerAdvice
@@ -29,5 +29,16 @@ public class ExceptionController {
         }
 
         return response;
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(PostNotFound.class)
+    public ErrorResponse postNotFound(PostNotFound e) {
+
+        return ErrorResponse.builder()
+                .code("404")
+                .message(e.getMessage())
+                .build();
     }
 }
