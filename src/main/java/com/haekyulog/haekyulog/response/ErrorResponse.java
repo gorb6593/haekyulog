@@ -2,7 +2,6 @@ package com.haekyulog.haekyulog.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +18,7 @@ import java.util.Map;
  * }
  */
 @Getter
+//@JsonInclude(value = JsonInclude.Include.NON_EMPTY) //없는 값 안보내기
 public class ErrorResponse {
 
     private final String code;
