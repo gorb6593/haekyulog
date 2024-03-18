@@ -17,7 +17,6 @@ public class PostCreate {
 
     @NotBlank
     private String content;
-
     //빌더의 장정
     // - 가독성에 좋다.
     // - 값 생성에 대한 유연함
