@@ -12,7 +12,7 @@ public class PostNotFound extends HaekyulogException{
     }
 
     @Override
-    public int getStatusCode() {
+    public int getStatusCode()  {
         return 404;
     }
 }

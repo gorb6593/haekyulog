@@ -285,8 +285,8 @@ class PostControllerTest {
 
         //given
         PostCreate request = PostCreate.builder()
-                .title("해규 제목 바보")
-                .content("헬리오시티")
+                .title("나는 바보입니다.")
+                .content("반포자이")
                 .build();
 
         String json = objectMapper.writeValueAsString(request);
@@ -295,7 +295,7 @@ class PostControllerTest {
         mockMvc.perform(post("/posts")
                         .contentType(APPLICATION_JSON)
                         .content(json))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isBadRequest())
                 .andDo(print());
 
 

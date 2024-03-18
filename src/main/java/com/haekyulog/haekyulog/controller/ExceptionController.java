@@ -41,10 +41,18 @@ public class ExceptionController {
         ErrorResponse body = ErrorResponse.builder()
                 .code(String.valueOf(statusCode))
                 .message(e.getMessage())
+                .validation(e.getValidation())
                 .build();
+
+        //응답 json validation -> title : ~~
+//        if (e instanceof InvalidRequest) {
+//            InvalidRequest invalidRequest = (InvalidRequest) e;
+//            String fieldName = invalidRequest.getFieldName();
+//            String message = invalidRequest.getMessage();
+//            body.addValidation(fieldName, message);
+//        }
 
         return ResponseEntity.status(statusCode)
                 .body(body);
-
     }
 }
