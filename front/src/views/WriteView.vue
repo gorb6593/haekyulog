@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import {ref} from "vue";
-const count = ref(0)
+
 </script>
 
 <template>
-  <p>hello 안녕하세요</p> <button @click="count += 1">버튼을 눌러주세요</button>
-  <p>{{count}}</p>
+  <div>
+    <input type="text" placeholder="제목을 입력해주세요. ">
+  </div>
+
+  <div>
+    <textarea row="15"></textarea>
+  </div>
+
+  <button>글 작성완료</button>
 </template>
 
 <style>
