@@ -35,7 +35,7 @@ public class PostController {
     // post method
 
     @PostMapping("/posts")
-    public void post(@RequestBody @Valid PostCreate postCreate, @RequestParam String authorization) {
+    public void post(@RequestBody @Valid PostCreate postCreate, @RequestHeader String authorization) {
         // 인증에 대해..
         // GET Parameter 로 받기 -> ??
         // POST body value -> 얘는 아님
