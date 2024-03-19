@@ -41,7 +41,7 @@ class PostControllerTest {
     }
 
     @Test
-    @DisplayName("/posts 요청시 hello world 출력")
+    @DisplayName("글 작성 요청시 hello world 출력")
     void test() throws Exception {
 
         //given
@@ -64,7 +64,7 @@ class PostControllerTest {
     }
 
     @Test
-    @DisplayName("/posts 요청시 title 필수")
+    @DisplayName("글 작성 요청시 title 필수")
     void test2() throws Exception {
 
         //given
@@ -86,7 +86,7 @@ class PostControllerTest {
     }
 
     @Test
-    @DisplayName("/posts 요청시 db 저장")
+    @DisplayName("글 작성 요청시 db 저장")
     void test3() throws Exception {
 
         //given
@@ -98,7 +98,7 @@ class PostControllerTest {
         String json = objectMapper.writeValueAsString(request);
 
         //when
-        mockMvc.perform(post("/posts")
+        mockMvc.perform(post("/posts?authorization=haekyulog")
                         .contentType(APPLICATION_JSON)
                         .content(json)
                 )
