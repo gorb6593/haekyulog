@@ -29,6 +29,12 @@ public class PostController {
         return "Hello world";
     }
 
+
+    @GetMapping("/foo")
+    public String foo() {
+        return "foo";
+    }
+
     // Http Method
     // Get, Post, Put, Patch, Delete, Options, Head, Trace, connect
     // 글 등록
