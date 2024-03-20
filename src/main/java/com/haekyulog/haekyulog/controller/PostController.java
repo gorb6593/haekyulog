@@ -31,7 +31,8 @@ public class PostController {
 
 
     @GetMapping("/foo")
-    public String foo() {
+    public String foo(@RequestAttribute("userName") String userName) {
+        log.info(">>> {} ", userName);
         return "foo";
     }
 
