@@ -11,7 +11,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class AuthResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().equals(UnknownError.class);
+        return parameter.getParameterType().equals(UserSession.class);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.haekyulog.haekyulog.controller;
 
+import com.haekyulog.haekyulog.config.data.UserSession;
 import com.haekyulog.haekyulog.requesst.PostCreate;
 import com.haekyulog.haekyulog.requesst.PostEdit;
 import com.haekyulog.haekyulog.requesst.PostSearch;
@@ -31,9 +32,14 @@ public class PostController {
 
 
     @GetMapping("/foo")
-    public String foo(@RequestAttribute("userName") String userName) {
-        log.info(">>> {} ", userName);
-        return "foo";
+    public String foo(UserSession userSession) {
+        log.info(">>> {} ", userSession.name);
+        return userSession.name;
+    }
+
+    @GetMapping("/bar")
+    public String bar(UserSession userSession) {
+        return "인증이 필요한 페이지";
     }
 
     // Http Method
