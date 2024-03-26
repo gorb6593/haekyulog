@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,4 +23,12 @@ public class Users {
 
     private LocalDateTime createdAt;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    private List<Session> sessions = new ArrayList<>();
+
+    public void addSession() {
+        sessions.add(Session.builder()
+                .users(this)
+                .build());
+    }
 }
