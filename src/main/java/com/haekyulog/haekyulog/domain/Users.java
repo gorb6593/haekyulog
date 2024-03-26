@@ -2,11 +2,14 @@ package com.haekyulog.haekyulog.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Users {
@@ -30,5 +33,13 @@ public class Users {
         sessions.add(Session.builder()
                 .users(this)
                 .build());
+    }
+
+    @Builder
+    public Users(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.createdAt = LocalDateTime.now();
     }
 }
