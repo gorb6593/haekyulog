@@ -3,10 +3,12 @@ package com.haekyulog.haekyulog.domain;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import static java.util.UUID.randomUUID;
 
+@Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Session {
@@ -25,5 +27,8 @@ public class Session {
         this.accessToken = randomUUID().toString();
         this.users = users;
     }
+
+
+
 }
 

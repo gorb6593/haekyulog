@@ -29,10 +29,13 @@ public class Users {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
     private List<Session> sessions = new ArrayList<>();
 
-    public void addSession() {
-        sessions.add(Session.builder()
+    public Session addSession() {
+        Session session = Session.builder()
                 .users(this)
-                .build());
+                .build();
+        sessions.add(session);
+
+        return session;
     }
 
     @Builder

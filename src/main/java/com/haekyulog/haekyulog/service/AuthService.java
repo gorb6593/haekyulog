@@ -1,5 +1,6 @@
 package com.haekyulog.haekyulog.service;
 
+import com.haekyulog.haekyulog.domain.Session;
 import com.haekyulog.haekyulog.domain.Users;
 import com.haekyulog.haekyulog.repository.InvalidSigninInformation;
 import com.haekyulog.haekyulog.repository.UserRepository;
@@ -15,10 +16,11 @@ public class AuthService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void signin(Login login) {
+    public String signin(Login login) {
         Users users = userRepository.findByEmailAndPassword(login.getEmail(), login.getPassword())
                 .orElseThrow(InvalidSigninInformation::new);
 
-        users.addSession();
+        Session session = users.addSession();
+        return session.getAccessToken();
     }
 }
