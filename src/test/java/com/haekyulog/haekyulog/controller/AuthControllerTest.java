@@ -5,7 +5,6 @@ import com.haekyulog.haekyulog.domain.Users;
 import com.haekyulog.haekyulog.repository.SessionRepository;
 import com.haekyulog.haekyulog.repository.UserRepository;
 import com.haekyulog.haekyulog.requesst.Login;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,12 +15,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @AutoConfigureMockMvc
 @SpringBootTest
 class AuthControllerTest {
@@ -126,11 +126,26 @@ class AuthControllerTest {
                         .content(json)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.accessToken", Matchers.notNullValue()))
+                .andExpect(jsonPath("$.accessToken", notNullValue()))
                 .andDo(print());
-
-//        Users loggedInUser = userRepository.findById(users.getId())
-//                .orElseThrow(RuntimeException::new);
-        //Assertions.assertEquals(1L, users.getSessions().size());
     }
+
+    @Test
+    @DisplayName("로그인 후 권한이 필요한 페이지 접속한다 /foo")
+    void test4() throws Exception {
+        //given
+        Users users = Users.builder()
+                .name("해규")
+                .password("1234")
+                .email("gorb6593@naver.com")
+                .build();
+
+        //expected
+        mockMvc.perform(get("/foo")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andDo(print());
+    }
+
+
 }
