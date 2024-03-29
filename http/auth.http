@@ -7,3 +7,9 @@ Content-Type: application/json
   "email" : "gorb6593@naver.com",
   "password" : "1234"
 }
+
+###인증 페이지 요청
+
+GET http://localhost:8080/foo
+Content-Type: application/json
+Cookie: SESSION=6e3f9e4a-5f38-4153-b4e2-43ccfbc0272a
