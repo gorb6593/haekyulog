@@ -1,6 +1,7 @@
 package com.haekyulog.haekyulog.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.haekyulog.haekyulog.domain.Session;
 import com.haekyulog.haekyulog.domain.Users;
 import com.haekyulog.haekyulog.repository.SessionRepository;
 import com.haekyulog.haekyulog.repository.UserRepository;
@@ -140,8 +141,31 @@ class AuthControllerTest {
                 .email("gorb6593@naver.com")
                 .build();
 
+        Session session = users.addSession();
+        userRepository.save(users);
         //expected
         mockMvc.perform(get("/foo")
+                        .header("Authorization", session.getAccessToken())
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("로그인 후 검증되지 않은 세션값으로 권한이 필요한 페이지에 접속할 수 없다.")
+    void test5() throws Exception {
+        //given
+        Users users = Users.builder()
+                .name("해규")
+                .password("1234")
+                .email("gorb6593@naver.com")
+                .build();
+
+        Session session = users.addSession();
+        userRepository.save(users);
+        //expected
+        mockMvc.perform(get("/foo")
+                        .header("Authorization", session.getAccessToken() + "!!")
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isUnauthorized())
                 .andDo(print());

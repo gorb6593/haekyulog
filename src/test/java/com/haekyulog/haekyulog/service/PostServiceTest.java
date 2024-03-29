@@ -169,6 +169,7 @@ class PostServiceTest {
                 .orElseThrow(() -> new RuntimeException("글이 없습니다. id = " + post.getId()));
         assertEquals("헬리오시티", changePost.getContent());
 
+
     }
 
     @Test
