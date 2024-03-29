@@ -17,6 +17,12 @@ spring:
     driver-class-name: org.h2.Driver
 
   jpa:
-    defer-datasource-initialization: true
+    defer-datasource-initializ ation: true
   sql:
     init-model: always
+
+haekyulog:
+  hello:
+    name: "haekyu"
+    home: "seould"
+    hobby: "programming"
