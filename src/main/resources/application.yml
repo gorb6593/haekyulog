@@ -22,7 +22,4 @@ spring:
     init-model: always
 
 haekyulog:
-  hello:
-    name: "haekyu"
-    home: "seould"
-    hobby: "programming"
+  jwt-key: "bYzzb9zF8+vtdNLl4Vw5u1sqjPTOHwCkEscD1mWltrE="

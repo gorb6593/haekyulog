@@ -1,5 +1,6 @@
 package com.haekyulog.haekyulog.controller;
 
+import com.haekyulog.haekyulog.config.AppConfig;
 import com.haekyulog.haekyulog.requesst.Login;
 import com.haekyulog.haekyulog.response.SessionResponse;
 import com.haekyulog.haekyulog.service.AuthService;
@@ -19,9 +20,9 @@ import java.util.Base64;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private static final String KEY = "bYzzb9zF8+vtdNLl4Vw5u1sqjPTOHwCkEscD1mWltrE=";
     //private final UserRepository userRepository;
     private final AuthService authService;
+    private final AppConfig appConfig;
 
     //토큰 버전
 //    @PostMapping("/auth/login")
@@ -69,7 +70,7 @@ public class AuthController {
 
         //SecretKey key2 = Keys.hmacShaKeyFor(Base64.getDecoder().decode(KEY));
 
-        SecretKey key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(KEY));
+        SecretKey key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(appConfig.jwtKey));
 
         String jws = Jwts.builder()
                 .subject(String.valueOf(userId))

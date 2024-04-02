@@ -7,14 +7,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "haekyulog")
 public class AppConfig {
 
-    public Hello hello;
-
-    @Data
-    public static class Hello {
-        public String name;
-        public String home;
-        public String hobby;
-    }
-
-
+    public String jwtKey;
 }
