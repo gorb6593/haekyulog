@@ -18,8 +18,9 @@ spring:
 
   jpa:
     defer-datasource-initializ ation: true
-  sql:
-    init-model: always
+#  sql:
+#    init:
+#      mode: always
 
 haekyulog:
   jwt-key: "bYzzb9zF8+vtdNLl4Vw5u1sqjPTOHwCkEscD1mWltrE="

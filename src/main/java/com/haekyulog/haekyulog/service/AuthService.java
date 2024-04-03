@@ -5,6 +5,7 @@ import com.haekyulog.haekyulog.domain.Users;
 import com.haekyulog.haekyulog.repository.InvalidSigninInformation;
 import com.haekyulog.haekyulog.repository.UserRepository;
 import com.haekyulog.haekyulog.requesst.Login;
+import com.haekyulog.haekyulog.requesst.Signup;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,5 +23,14 @@ public class AuthService {
 
         Session session = users.addSession();
         return users.getId();
+    }
+
+    public void signup(Signup signup) {
+        Users users = Users.builder()
+                .name(signup.getName())
+                .password(signup.getPassword())
+                .email(signup.getEmail())
+                .build();
+        userRepository.save(users);
     }
 }
