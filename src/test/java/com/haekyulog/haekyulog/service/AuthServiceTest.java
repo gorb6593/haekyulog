@@ -1,5 +1,6 @@
 package com.haekyulog.haekyulog.service;
 
+import com.haekyulog.haekyulog.domain.Users;
 import com.haekyulog.haekyulog.repository.UserRepository;
 import com.haekyulog.haekyulog.requesst.Signup;
 import org.junit.jupiter.api.AfterEach;
@@ -29,7 +30,6 @@ class AuthServiceTest {
     void test1() {
         //given
         Signup signup = Signup.builder()
-                .account("haekyu")
                 .email("gorb6593@naver.com")
                 .password("1234")
                 .build();
@@ -39,6 +39,11 @@ class AuthServiceTest {
 
         //then
         assertEquals(1, userRepository.count());
+
+        Users users = userRepository.findAll().iterator().next();
+        assertEquals("gorb6593@naver.com", users.getEmail());
+        assertEquals("1234", users.getPassword());
+        //assertEquals("해규", users.getName());
 
     }
 
