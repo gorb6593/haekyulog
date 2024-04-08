@@ -6,6 +6,7 @@ import com.haekyulog.haekyulog.domain.Users;
 import com.haekyulog.haekyulog.repository.SessionRepository;
 import com.haekyulog.haekyulog.repository.UserRepository;
 import com.haekyulog.haekyulog.requesst.Login;
+import com.haekyulog.haekyulog.requesst.Signup;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -168,6 +169,24 @@ class AuthControllerTest {
                         .header("Authorization", session.getAccessToken() + "!!")
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isUnauthorized())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("회원가입")
+    void test6() throws Exception {
+        //given
+
+        Signup signup = Signup.builder()
+                .email("gorb6593@naver.com")
+                .password("1234")
+                .name("해규")
+                .build();
+        //expected
+        mockMvc.perform(post("/auth/signup")
+                        .content(objectMapper.writeValueAsString(signup))
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 

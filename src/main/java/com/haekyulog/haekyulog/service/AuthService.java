@@ -2,6 +2,7 @@ package com.haekyulog.haekyulog.service;
 
 import com.haekyulog.haekyulog.domain.Session;
 import com.haekyulog.haekyulog.domain.Users;
+import com.haekyulog.haekyulog.exception.AlreadyExistsEmailException;
 import com.haekyulog.haekyulog.repository.InvalidSigninInformation;
 import com.haekyulog.haekyulog.repository.UserRepository;
 import com.haekyulog.haekyulog.requesst.Login;
@@ -9,6 +10,8 @@ import com.haekyulog.haekyulog.requesst.Signup;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +29,13 @@ public class AuthService {
     }
 
     public void signup(Signup signup) {
+
+        Optional<Users> byEmail = userRepository.findByEmail(signup.getEmail());
+
+        if (byEmail.isPresent()) {
+            throw new AlreadyExistsEmailException();
+        }
+
         Users users = Users.builder()
                 .name(signup.getName())
                 .password(signup.getPassword())
