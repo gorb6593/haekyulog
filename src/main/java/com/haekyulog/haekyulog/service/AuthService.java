@@ -1,16 +1,12 @@
 package com.haekyulog.haekyulog.service;
 
-import com.haekyulog.haekyulog.domain.Session;
+import com.haekyulog.haekyulog.crypto.PasswordEncoder;
 import com.haekyulog.haekyulog.domain.Users;
 import com.haekyulog.haekyulog.exception.AlreadyExistsEmailException;
-import com.haekyulog.haekyulog.repository.InvalidSigninInformation;
 import com.haekyulog.haekyulog.repository.UserRepository;
-import com.haekyulog.haekyulog.requesst.Login;
 import com.haekyulog.haekyulog.requesst.Signup;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -20,14 +16,26 @@ public class AuthService {
 
     private final UserRepository userRepository;
 
-    @Transactional
-    public Long signin(Login login) {
-        Users users = userRepository.findByEmailAndPassword(login.getEmail(), login.getPassword())
-                .orElseThrow(InvalidSigninInformation::new);
-
-        Session session = users.addSession();
-        return users.getId();
-    }
+//    @Transactional
+//    public Long signin(Login login) {
+////        Users users = userRepository.findByEmailAndPassword(login.getEmail(), login.getPassword())
+////                .orElseThrow(InvalidSigninInformation::new);
+////
+////        Session session = users.addSession();
+//
+//        Users users = userRepository.findByEmail(login.getEmail())
+//                .orElseThrow(InvalidSigninInformation::new);
+//
+//        PasswordEncoder encoder = new PasswordEncoder();
+//
+//        var matches = encoder.matches(login.getPassword(), users.getPassword());
+//
+//        if (!matches) {
+//            throw new InvalidSigninInformation();
+//        }
+//
+//        return users.getId();
+//    }
 
     public void signup(Signup signup) {
 
@@ -37,9 +45,9 @@ public class AuthService {
             throw new AlreadyExistsEmailException();
         }
 
-        SCryptPasswordEncoder encoder = new SCryptPasswordEncoder(16, 8, 1, 32, 64);
+        PasswordEncoder encoder = new PasswordEncoder();
 
-        String encodedPassword = encoder.encode(signup.getPassword());
+        String encodedPassword = encoder.encrypt(signup.getPassword());
 
         Users users = Users.builder()
                 .name(signup.getName())

@@ -1,6 +1,5 @@
 package com.haekyulog.haekyulog.controller;
 
-import com.haekyulog.haekyulog.config.data.UserSession;
 import com.haekyulog.haekyulog.requesst.PostCreate;
 import com.haekyulog.haekyulog.requesst.PostEdit;
 import com.haekyulog.haekyulog.requesst.PostSearch;
@@ -31,16 +30,16 @@ public class PostController {
     }
 
 
-    @GetMapping("/foo")
-    public Long foo(UserSession userSession) {
-        log.info(">>> {} ", userSession.id);
-        return userSession.id;
-    }
-
-    @GetMapping("/bar")
-    public String bar(UserSession userSession) {
-        return "인증이 필요한 페이지";
-    }
+//    @GetMapping("/foo")
+//    public Long foo(UserSession userSession) {
+//        log.info(">>> {} ", userSession.id);
+//        return userSession.id;
+//    }
+//
+//    @GetMapping("/bar")
+//    public String bar(UserSession userSession) {
+//        return "인증이 필요한 페이지";
+//    }
 
     // Http Method
     // Get, Post, Put, Patch, Delete, Options, Head, Trace, connect

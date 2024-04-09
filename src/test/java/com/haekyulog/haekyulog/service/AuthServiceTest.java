@@ -71,4 +71,60 @@ class AuthServiceTest {
         assertThrows(AlreadyExistsEmailException.class, () -> authService.signup(signup));
     }
 
+//    @Test
+//    @DisplayName("로그인 성공")
+//    void test3() {
+//        //given
+//        PasswordEncoder encoder = new PasswordEncoder();
+//        String encrypt = encoder.encrypt("1234");
+//
+//        Users users = Users.builder()
+//                .email("gorb6593@naver.com")
+//                .password(encrypt)
+//                .name("이해규")
+//                .build();
+//
+//        userRepository.save(users);
+//
+//        //when
+//        Login login = Login.builder()
+//                .email("gorb6593@naver.com")
+//                .password("1234")
+//                .build();
+//
+//        Long signin = authService.signin(login);
+//
+//        //then
+//        assertNotNull(signin);
+//    }
+//
+//    @Test
+//    @DisplayName("로그인 비밀번호 틀림")
+//    void test4() {
+//        //given
+//        PasswordEncoder encoder = new PasswordEncoder();
+//        String encrypt = encoder.encrypt("1234");
+//
+//        Users users = Users.builder()
+//                .email("gorb6593@naver.com")
+//                .password(encrypt)
+//                .name("이해규")
+//                .build();
+//
+//        userRepository.save(users);
+//
+//        //when
+//        Login login = Login.builder()
+//                .email("gorb6593@naver.com")
+//                .password("12345")
+//                .build();
+//
+//        //expected
+//        assertThrows(InvalidSigninInformation.class, () -> authService.signin(login));
+//
+//
+//
+//
+//    }
+
 }

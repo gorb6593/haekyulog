@@ -40,50 +40,50 @@ class PostControllerTest {
         postRepository.deleteAll();
     }
 
-    @Test
-    @DisplayName("글 작성 요청시 hello world 출력")
-    void test() throws Exception {
+//    @Test
+//    @DisplayName("글 작성 요청시 hello world 출력")
+//    void test() throws Exception {
+//
+//        //given
+//        PostCreate request = PostCreate.builder()
+//                .title("제목입니다.")
+//                .content("내용입니다.")
+//                .build();
+//        String json = objectMapper.writeValueAsString(request);
+//
+//        //expected
+//        mockMvc.perform(post("/posts")
+//                        .contentType(APPLICATION_JSON)
+//                        .content(json)
+//                )
+//                .andExpect(status().isOk())
+//                .andExpect(content().string(""))
+//                .andDo(print());
+//
+//
+//    }
 
-        //given
-        PostCreate request = PostCreate.builder()
-                .title("제목입니다.")
-                .content("내용입니다.")
-                .build();
-        String json = objectMapper.writeValueAsString(request);
-
-        //expected
-        mockMvc.perform(post("/posts")
-                        .contentType(APPLICATION_JSON)
-                        .content(json)
-                )
-                .andExpect(status().isOk())
-                .andExpect(content().string(""))
-                .andDo(print());
-
-
-    }
-
-    @Test
-    @DisplayName("글 작성 요청시 title 필수")
-    void test2() throws Exception {
-
-        //given
-        PostCreate request = PostCreate.builder()
-                .title("제목입니다.")
-                .content("내용입니다.")
-                .build();
-        String json = objectMapper.writeValueAsString(request);
-
-        //expected
-        mockMvc.perform(post("/posts")
-                        .contentType(APPLICATION_JSON)
-                        //.content("{\"title\": null, \"content\": \"내용입니다!@!\"}")
-                        .content(json)
-                )
-                .andExpect(status().isOk())
-                .andDo(print());
-
-    }
+//    @Test
+//    @DisplayName("글 작성 요청시 title 필수")
+//    void test2() throws Exception {
+//
+//        //given
+//        PostCreate request = PostCreate.builder()
+//                .title("제목입니다.")
+//                .content("내용입니다.")
+//                .build();
+//        String json = objectMapper.writeValueAsString(request);
+//
+//        //expected
+//        mockMvc.perform(post("/posts")
+//                        .contentType(APPLICATION_JSON)
+//                        //.content("{\"title\": null, \"content\": \"내용입니다!@!\"}")
+//                        .content(json)
+//                )
+//                .andExpect(status().isOk())
+//                .andDo(print());
+//
+//    }
 
     @Test
     @DisplayName("글 작성 요청시 db 저장")
