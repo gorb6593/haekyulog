@@ -69,11 +69,6 @@ class AuthServiceTest {
 
         //expected
         assertThrows(AlreadyExistsEmailException.class, () -> authService.signup(signup));
-//        Users users = userRepository.findAll().iterator().next();
-//        assertEquals("gorb6593@naver.com", users.getEmail());
-//        assertEquals("1234", users.getPassword());
-//        assertEquals("해규", users.getName());
-
     }
 
 }
