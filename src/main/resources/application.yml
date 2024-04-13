@@ -21,6 +21,14 @@ spring:
 #  sql:
 #    init:
 #      mode: always
+  session:
+    timeout: 86400
 
 haekyulog:
   jwt-key: "bYzzb9zF8+vtdNLl4Vw5u1sqjPTOHwCkEscD1mWltrE="
+
+server:
+  servlet:
+    session:
+      cookie:
+        max-age: 172800

@@ -32,6 +32,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
 
     implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
+    implementation 'org.springframework.session:spring-session-jdbc'
 
     implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
