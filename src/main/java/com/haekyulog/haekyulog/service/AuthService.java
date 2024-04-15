@@ -1,11 +1,11 @@
 package com.haekyulog.haekyulog.service;
 
-import com.haekyulog.haekyulog.crypto.PasswordEncoder;
 import com.haekyulog.haekyulog.domain.Users;
 import com.haekyulog.haekyulog.exception.AlreadyExistsEmailException;
 import com.haekyulog.haekyulog.repository.UserRepository;
 import com.haekyulog.haekyulog.requesst.Signup;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,7 +15,7 @@ import java.util.Optional;
 public class AuthService {
 
     private final UserRepository userRepository;
-
+    private final PasswordEncoder passwordEncoder;
 //    @Transactional
 //    public Long signin(Login login) {
 ////        Users users = userRepository.findByEmailAndPassword(login.getEmail(), login.getPassword())
@@ -45,9 +45,10 @@ public class AuthService {
             throw new AlreadyExistsEmailException();
         }
 
-        PasswordEncoder encoder = new PasswordEncoder();
-
-        String encodedPassword = encoder.encrypt(signup.getPassword());
+//        PasswordEncoder encoder = new PasswordEncoder();
+//
+//        String encodedPassword = encoder.encrypt(signup.getPassword());
+        String encodedPassword = passwordEncoder.encode(signup.getPassword());
 
         Users users = Users.builder()
                 .name(signup.getName())
