@@ -1,5 +1,8 @@
 package com.haekyulog.haekyulog.config;
 
+import com.haekyulog.haekyulog.config.handler.Http401Handler;
+import com.haekyulog.haekyulog.config.handler.Http403Handler;
+import com.haekyulog.haekyulog.config.handler.LoginFailHandler;
 import com.haekyulog.haekyulog.domain.Users;
 import com.haekyulog.haekyulog.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
@@ -37,9 +39,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/auth/signup").permitAll()
-//                        .requestMatchers("/user").hasAnyRole("USER","ADMIN")
-                        .requestMatchers("/admin")
-                                .access(new WebExpressionAuthorizationManager("hasRole('ADMIN') AND hasAnyAuthority('WRITE')"))
+                        .requestMatchers("/user").hasAnyRole("USER")
+                        .requestMatchers("/admin").hasAnyRole("ADMIN")
+//                        .requestMatchers("/admin")
+//                                .access(new WebExpressionAuthorizationManager("hasRole('ADMIN') AND hasAnyAuthority('WRITE')"))
                         .anyRequest().authenticated()
                 )
                 .formLogin((formLogin) ->
@@ -49,7 +52,12 @@ public class SecurityConfig {
                                 .passwordParameter("password")
                                 .loginProcessingUrl("/auth/login")
                                 .defaultSuccessUrl("/")
+                                .failureHandler(new LoginFailHandler())
                 )
+                .exceptionHandling(e -> {
+                    e.accessDeniedHandler(new Http403Handler());
+                    e.authenticationEntryPoint(new Http401Handler());
+                })
                 .rememberMe(rm -> rm.rememberMeParameter("remember")
                         .alwaysRemember(false)
                         .tokenValiditySeconds(2592000)
