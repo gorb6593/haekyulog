@@ -1,10 +1,13 @@
 package com.haekyulog.haekyulog.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.haekyulog.haekyulog.config.handler.Http401Handler;
 import com.haekyulog.haekyulog.config.handler.Http403Handler;
 import com.haekyulog.haekyulog.config.handler.LoginFailHandler;
 import com.haekyulog.haekyulog.domain.Users;
 import com.haekyulog.haekyulog.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,9 +22,13 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final ObjectMapper objectMapper;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -52,11 +59,11 @@ public class SecurityConfig {
                                 .passwordParameter("password")
                                 .loginProcessingUrl("/auth/login")
                                 .defaultSuccessUrl("/")
-                                .failureHandler(new LoginFailHandler())
+                                .failureHandler(new LoginFailHandler(objectMapper))
                 )
                 .exceptionHandling(e -> {
-                    e.accessDeniedHandler(new Http403Handler());
-                    e.authenticationEntryPoint(new Http401Handler());
+                    e.accessDeniedHandler(new Http403Handler(objectMapper));
+                    e.authenticationEntryPoint(new Http401Handler(objectMapper));
                 })
                 .rememberMe(rm -> rm.rememberMeParameter("remember")
                         .alwaysRemember(false)
