@@ -52,15 +52,15 @@ public class SecurityConfig {
 //                                .access(new WebExpressionAuthorizationManager("hasRole('ADMIN') AND hasAnyAuthority('WRITE')"))
                         .anyRequest().authenticated()
                 )
-                .formLogin((formLogin) ->
-                        formLogin
-                                .loginPage("/auth/login")
-                                .usernameParameter("username")
-                                .passwordParameter("password")
-                                .loginProcessingUrl("/auth/login")
-                                .defaultSuccessUrl("/")
-                                .failureHandler(new LoginFailHandler(objectMapper))
-                )
+//                .formLogin((formLogin) ->
+//                        formLogin
+//                                .loginPage("/auth/login")
+//                                .usernameParameter("username")
+//                                .passwordParameter("password")
+//                                .loginProcessingUrl("/auth/login")
+//                                .defaultSuccessUrl("/")
+//                                .failureHandler(new LoginFailHandler(objectMapper))
+//                )
                 .exceptionHandling(e -> {
                     e.accessDeniedHandler(new Http403Handler(objectMapper));
                     e.authenticationEntryPoint(new Http401Handler(objectMapper));

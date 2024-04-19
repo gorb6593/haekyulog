@@ -11,9 +11,13 @@ Content-Type: application/json
 ### 로그인
 
 POST http://localhost:8080/auth/login
-Content-Type: application/x-www-form-urlencoded
+Content-Type: application/json
 
-username=gorb6593@naver.com&password=1234&remember=1
+{
+  "email" : "gorb6593@naver.com",
+  "password" : "1234"
+
+}
 
 ###메인 페이지
 
