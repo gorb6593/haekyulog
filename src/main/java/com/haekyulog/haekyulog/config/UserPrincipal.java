@@ -15,8 +15,8 @@ public class UserPrincipal extends User {
     public UserPrincipal(Users users) {
         super(users.getEmail(), users.getPassword(),
                 List.of(
-                        new SimpleGrantedAuthority("ROLE_USER")
-                        ));
+                        new SimpleGrantedAuthority("ROLE_ADMIN")
+                ));
         this.userId = users.getId();
     }
 

@@ -8,6 +8,7 @@ import com.haekyulog.haekyulog.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,16 +47,12 @@ public class PostController {
     // 글 등록
     // post method
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/posts")
-    public void post(@RequestBody @Valid PostCreate postCreate, @RequestHeader String authorization) {
-        // 인증에 대해..
-        // GET Parameter 로 받기 -> ??
-        // POST body value -> 얘는 아님
-        // Hearder
-        if (authorization.equals("haekyulog")) {
-            postCreate.validate();
-            postService.write(postCreate);
-        }
+    public void post(@RequestBody @Valid PostCreate postCreate) {
+        postCreate.validate();
+        postService.write(postCreate);
+
     }
 
     /**
@@ -79,11 +76,13 @@ public class PostController {
         return postService.getList(postSearch);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PatchMapping("/posts/{postId}")
     public PostResponse edit(@PathVariable Long postId, @RequestBody @Valid PostEdit request) {
         return postService.edit(postId, request);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/posts/{postId}")
     public void delete(@PathVariable Long postId) {
         postService.delete(postId);
