@@ -16,8 +16,8 @@ public class EmailPasswordAuthFilter extends AbstractAuthenticationProcessingFil
 
     private final ObjectMapper objectMapper;
 
-    protected EmailPasswordAuthFilter(ObjectMapper objectMapper) {
-        super("auth/login");
+    public EmailPasswordAuthFilter(String loginUrl, ObjectMapper objectMapper) {
+        super(loginUrl);
         this.objectMapper = objectMapper;
     }
 
